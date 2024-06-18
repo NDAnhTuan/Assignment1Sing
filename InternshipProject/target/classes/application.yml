@@ -1,0 +1,8 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://viaduct.proxy.rlwy.net:49985/railway
+    username: postgres
+    password: mNmNMmppkQhcIAnyEdofBwxFNnzqNmOM
+    driver-class-name: org.postgresql.Driver
+retry:
+  maxAttempts: 5
