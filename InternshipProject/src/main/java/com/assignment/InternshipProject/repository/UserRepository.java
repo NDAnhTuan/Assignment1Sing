@@ -48,7 +48,6 @@ public class UserRepository {
 //            return Optional.empty();
 //        }
     }
-
     public int save(User user) throws RuntimeException{
 //        try{
         String sql = "INSERT INTO users (firstname, lastname, username, password, dateofbirth, createat, lastedited) VALUES (?, ?, ?, ?, ?, ?, ?)";
@@ -75,6 +74,12 @@ public class UserRepository {
     public List<User> findAll() throws RuntimeException{
         String sql = "SELECT * FROM users";
         return jdbcTemplate.query(sql, userRowMapper);
+    }
+    public Optional<User> findUserById(Integer id) throws RuntimeException{
+        String sql = "SELECT * FROM users where id = ?";
+        return jdbcTemplate.query(sql, new Object[]{id}, userRowMapper)
+                .stream()
+                .findFirst();
     }
     public String encode(String password) {
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();

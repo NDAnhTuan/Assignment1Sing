@@ -20,6 +20,7 @@ public class LoginSessionRepository {
         LoginSession loginSession = new LoginSession();
         loginSession.setId(rs.getInt("id"));
         loginSession.setLogin_at(rs.getTimestamp("loginat").toLocalDateTime());
+        loginSession.setIduser(rs.getInt("iduser"));
         if (rs.getTimestamp("logoutat") != null) {
             loginSession.setLogout_at(rs.getTimestamp("logoutat").toLocalDateTime());
         }
@@ -28,7 +29,7 @@ public class LoginSessionRepository {
     public int save(LoginSession loginSession) throws RuntimeException {
         String sql = "INSERT INTO loginsession (iduser, loginat) VALUES (?, ?)";
         return jdbcTemplate.update(sql,
-                loginSession.getUser().getId(),
+                loginSession.getIduser(),
                 loginSession.getLogin_at());
     }
     public Optional<LoginSession> findActiveSessionsByUserId(int userId) throws RuntimeException{
@@ -41,6 +42,11 @@ public class LoginSessionRepository {
         String sql = "UPDATE loginsession SET logoutat = ? WHERE id = ?";
         return jdbcTemplate.update(sql, LocalDateTime.now(), sessionId);
     }
-
+    public Optional<LoginSession> findSessionById(int sessionId) throws RuntimeException{
+        String sql = "SELECT * FROM loginsession WHERE id = ?";
+        return jdbcTemplate.query(sql, new Object[]{sessionId}, sessionRowMapper)
+                .stream()
+                .findFirst();
+    }
 
 }

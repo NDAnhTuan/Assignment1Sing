@@ -63,14 +63,17 @@ public class UserController {
             @RequestBody LoginRequest loginRequest
     ){
         try{
-            Boolean isSuccessLogined = userService.login(loginRequest);
-            if(isSuccessLogined){
+            Integer sessionId = userService.login(loginRequest);
+            if(sessionId != null){
                 return ResponseEntity.ok().body(new HttpResponse(
                         HttpStatus.OK.value(),
                         HttpStatus.OK,
                         LocalDateTime.now().toString(),
                         "Login successfully",
-                        Map.of("Success", isSuccessLogined),
+                        Map.of(
+                                "Success", true,
+                                "SessionId", sessionId
+                        ),
                         ResponseCode.SUCCESS
                 ));
             }
@@ -79,7 +82,7 @@ public class UserController {
                     HttpStatus.BAD_REQUEST,
                     LocalDateTime.now().toString(),
                     ResponseCode.INVALID_CREDENTIALS.getMessage(),
-                    Map.of("Success", isSuccessLogined),
+                    Map.of("Success", false),
                     ResponseCode.INVALID_CREDENTIALS
             ));
         }
@@ -96,10 +99,10 @@ public class UserController {
     }
     @PostMapping("/logout")
     public ResponseEntity<HttpResponse> logout(
-            @RequestBody User user
+            @RequestBody LogoutRequest logoutRequest
     ){
         try{
-            Boolean isSuccessLogout= userService.logout(user.getUserName());
+            Boolean isSuccessLogout= userService.logout(logoutRequest.sessionId());
             if(isSuccessLogout){
                 return ResponseEntity.ok().body(new HttpResponse(
                         HttpStatus.OK.value(),
@@ -114,9 +117,9 @@ public class UserController {
                     HttpStatus.BAD_REQUEST.value(),
                     HttpStatus.BAD_REQUEST,
                     LocalDateTime.now().toString(),
-                    ResponseCode.INVALID_CREDENTIALS.getMessage(),
+                    ResponseCode.INVALID_SESSIONID.getMessage(),
                     Map.of("Success", isSuccessLogout),
-                    ResponseCode.INVALID_CREDENTIALS
+                    ResponseCode.INVALID_SESSIONID
             ));
         }
         catch (RuntimeException e){

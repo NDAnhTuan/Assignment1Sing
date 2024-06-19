@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.Option;
 import javax.xml.crypto.Data;
 import java.util.Optional;
 @Service
@@ -77,7 +78,7 @@ public class UserService {
         }
         throw new RuntimeException("Unexpected error");
     }
-    public Boolean login(LoginRequest loginRequest) throws DataAccessException {
+    public Integer login(LoginRequest loginRequest) throws DataAccessException {
         Optional<User> existingUser = findUserByUserName(loginRequest.userName());
         if(existingUser.isPresent()){
             BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
@@ -86,17 +87,32 @@ public class UserService {
                 if(!existingUser.get().getLoggedIn()){
                     userRepository.updateState(existingUser.get(), true);
                 }
-                return true;
-            }else return false;
+                int sessionId = loginSessionRepository
+                        .findActiveSessionsByUserId(existingUser.get().getId())
+                        .get()
+                        .getId();
+                return sessionId;
+            }else return null;
         }else{
             throw new RuntimeException("Username doesn't existed");
         }
     }
-    public Boolean logout(String userName) throws DataAccessException{
-        Optional<User> existingUser = findUserByUserName(userName);
-        if(existingUser.isPresent()){
-            userRepository.updateState(existingUser.get(), false);
-            return true;
+    public Boolean logout(Integer sessionId) throws DataAccessException{
+        Optional<LoginSession> loginSession = loginSessionRepository.findSessionById(sessionId);
+        if(loginSession.isPresent()){
+            System.out.println(loginSession.get().getIduser());
+            System.out.println(loginSession.get().getLogin_at());
+            System.out.println(loginSession.get().getLogout_at());
+            System.out.println(loginSession.get().getId());
+
+
+            Optional<User> existingUser = userRepository.findUserById(loginSession.get().getIduser());
+
+            if(existingUser.isPresent()){
+
+                userRepository.updateState(existingUser.get(), false);
+                return true;
+            }
         }
         return false;
     }

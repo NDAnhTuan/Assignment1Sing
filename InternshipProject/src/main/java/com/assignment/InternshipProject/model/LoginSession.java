@@ -8,13 +8,13 @@ public class LoginSession {
     private Integer id;
     private LocalDateTime login_at;
     private LocalDateTime logout_at;
-    private User user;
+    private Integer iduser;
 
     public LoginSession() {
     }
 
-    public LoginSession(User user) {
-        this.user = user;
+    public LoginSession(Integer iduser) {
+        this.iduser = iduser;
         this.login_at = LocalDateTime.now();
     }
     public Integer getId() {
@@ -41,11 +41,11 @@ public class LoginSession {
         this.logout_at = logout_at;
     }
 
-    public User getUser() {
-        return user;
+    public Integer getIduser() {
+        return iduser;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setIduser(Integer iduser) {
+        this.iduser = iduser;
     }
 }
