@@ -1,6 +1,11 @@
 # Assignment-for-Internship---Basic-Engineering
-
 ## DB Diagram: https://dbdiagram.io/d/666fe849a179551be60a2494
+## Database Information
+- Database url: postgresql://postgres:mNmNMmppkQhcIAnyEdofBwxFNnzqNmOM@viaduct.proxy.rlwy.net:49985/railway
+- PGHOST: viaduct.proxy.rlwy.net
+- PGPASSWORD: mNmNMmppkQhcIAnyEdofBwxFNnzqNmOM
+- PGPORT: 49985
+- PGUSER: postgres
 ## REF: 
 - https://devopsvn.tech/kubernetes-practice/cau-hinh-postgresql-master-slave-replication-tren-kubernetes
 - https://viblo.asia/p/investigation-tao-va-quan-ly-index-postgresql-gAm5yrMXKdb
