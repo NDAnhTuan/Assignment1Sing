@@ -12,3 +12,4 @@
 - https://viblo.asia/p/008-materialized-view-voi-postgresql-RQqKLoP057z
 - https://www.thachphong.com/t/postgres/postgresql-cach-tot-nhat-de-ma-hoa-mat-khau-su-dung-cac-chuc-nang-mat-ma-cua-pgcrypto_284
 - https://aws.amazon.com/vi/compare/the-difference-between-mariadb-and-postgresql/
+- https://www.digitalocean.com/community/tutorials/how-to-schedule-automatic-backups-for-postgresql-with-pgagent-in-pgadmin
