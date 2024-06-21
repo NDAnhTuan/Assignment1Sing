@@ -3,6 +3,8 @@ package com.assignment.InternshipProject;
 import com.assignment.InternshipProject.model.User;
 import com.assignment.InternshipProject.repository.UserRepository;
 import com.github.javafaker.Faker;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -14,11 +16,12 @@ import java.time.ZoneId;
 
 @SpringBootApplication(exclude = {SecurityAutoConfiguration.class })
 public class InternshipProjectApplication {
+	private static final Logger log = LoggerFactory.getLogger(InternshipProjectApplication.class);
 
 	public static void main(String[] args) {
 		SpringApplication.run(InternshipProjectApplication.class, args);
 	}
-//	@Bean
+	//@Bean
 	public CommandLineRunner commandLineRunner(
 			UserRepository userRepository
 	){
