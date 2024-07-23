@@ -1,9 +1,9 @@
 spring:
   datasource:
-    url: jdbc:postgresql://viaduct.proxy.rlwy.net:49985/railway
-    username: postgres
-    password: mNmNMmppkQhcIAnyEdofBwxFNnzqNmOM
-    driver-class-name: org.postgresql.Driver
+    url: jdbc:mariadb:loadbalance://34.23.29.201:3306,35.243.216.21:3306/singasm3?autoReconnect=true&failOverReadOnly=false
+    username: test_remote
+    password: 123456
+    driver-class-name: org.mariadb.jdbc.Driver
 retry:
   maxAttempts: 5
 logging:
